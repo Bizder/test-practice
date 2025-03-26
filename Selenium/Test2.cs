@@ -32,3 +32,4 @@ namespace Selenium
             Assert.AreEqual("Google", driver.Title);
         }
     }
+}
