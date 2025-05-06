@@ -44,7 +44,12 @@ namespace Selenium
             }
             catch (NoSuchElementException)
             {
-                // Popup not shown – continue silently
+                var dir = Path.Combine(Directory.GetCurrentDirectory(), "screenshots");
+                Directory.CreateDirectory(dir);
+
+                var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                var path = Path.Combine(dir, $"error.png");
+                screenshot.SaveAsFile(path);
             }
 
             Assert.AreEqual("Google", driver.Title);
@@ -64,7 +69,12 @@ namespace Selenium
             }
             catch (NoSuchElementException)
             {
-                // Popup not shown – continue silently
+                var dir = Path.Combine(Directory.GetCurrentDirectory(), "screenshots");
+                Directory.CreateDirectory(dir);
+
+                var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                var path = Path.Combine(dir, $"error.png");
+                screenshot.SaveAsFile(path);
             }
 
             var box = driver.FindElement(By.Name("q"));
