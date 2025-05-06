@@ -29,7 +29,24 @@ namespace Selenium
         [TestCleanup]
         public void TearDown()
         {
-            driver.Quit();
+            if (TestContext.CurrentTestOutcome != UnitTestOutcome.Passed)
+            {
+                try
+                {
+                    var dir = Path.Combine(Directory.GetCurrentDirectory(), "screenshots");
+                    Directory.CreateDirectory(dir);
+
+                    var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                    var path = Path.Combine(dir, $"{TestContext.TestName}.png");
+                    screenshot.SaveAsFile(path);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Screenshot capture failed: {ex.Message}");
+                }
+            }
+
+            driver?.Quit();
         }
 
         [TestMethod]
@@ -44,14 +61,9 @@ namespace Selenium
                 wait.Until(ExpectedConditions.ElementToBeClickable(
                     By.XPath("//*[text()='Accept all']"))).Click();
             }
-            catch (NoSuchElementException)
+            catch (Exception ex)
             {
-                var dir = Path.Combine(Directory.GetCurrentDirectory(), "screenshots");
-                Directory.CreateDirectory(dir);
-
-                var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-                var path = Path.Combine(dir, $"{TestContext.TestName}.png");
-                screenshot.SaveAsFile(path);
+                Console.WriteLine($"Screenshot capture failed: {ex.Message}");
             }
 
             Assert.AreEqual("Google", driver.Title);
@@ -69,14 +81,9 @@ namespace Selenium
                 wait.Until(ExpectedConditions.ElementToBeClickable(
                     By.XPath("//*[text()='Accept all']"))).Click();
             }
-            catch (NoSuchElementException)
+            catch (Exception ex)
             {
-                var dir = Path.Combine(Directory.GetCurrentDirectory(), "screenshots");
-                Directory.CreateDirectory(dir);
-
-                var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-                var path = Path.Combine(dir, $"{TestContext.TestName}.png");
-                screenshot.SaveAsFile(path);
+                Console.WriteLine($"Screenshot capture failed: {ex.Message}");
             }
 
             var box = driver.FindElement(By.Name("q"));

@@ -29,7 +29,10 @@ jobs:
     - name: Run UI Tests (Selenium)
       run: dotnet test Selenium --no-build --configuration Release
 
-    - name: Upload Screenshots (if any)
+    - name: List all files (debug)
+      run: dir /s /b
+
+    - name: Upload Screenshots
       if: always()
       uses: actions/upload-artifact@v4
       with:
