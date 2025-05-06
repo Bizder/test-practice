@@ -9,6 +9,8 @@ namespace Selenium
     [TestClass]
     public class GoogleTests
     {
+        public TestContext TestContext { get; set; }
+
         private IWebDriver driver;
 
         [TestInitialize]
@@ -48,7 +50,7 @@ namespace Selenium
                 Directory.CreateDirectory(dir);
 
                 var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-                var path = Path.Combine(dir, $"error.png");
+                var path = Path.Combine(dir, $"{TestContext.TestName}.png");
                 screenshot.SaveAsFile(path);
             }
 
@@ -73,7 +75,7 @@ namespace Selenium
                 Directory.CreateDirectory(dir);
 
                 var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-                var path = Path.Combine(dir, $"error.png");
+                var path = Path.Combine(dir, $"{TestContext.TestName}.png");
                 screenshot.SaveAsFile(path);
             }
 
