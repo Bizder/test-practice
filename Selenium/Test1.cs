@@ -14,7 +14,14 @@ namespace Selenium
         [TestInitialize]
         public void Setup()
         {
-            driver = new ChromeDriver();
+            var options = new ChromeOptions();
+
+            if (Environment.GetEnvironmentVariable("CI") == "true")
+            {
+                options.AddArgument("--headless");
+                options.AddArgument("--disable-gpu");
+            }
+            driver = new ChromeDriver(options);
         }
 
         [TestCleanup]
