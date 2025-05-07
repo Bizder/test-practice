@@ -11,7 +11,7 @@ namespace Selenium
     {
         public TestContext TestContext { get; set; }
 
-        private IWebDriver driver;
+        private IWebDriver? driver;
 
         [TestInitialize]
         public void Setup()
@@ -36,7 +36,7 @@ namespace Selenium
                     var dir = Path.Combine(Directory.GetCurrentDirectory(), "screenshots");
                     Directory.CreateDirectory(dir);
 
-                    var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                    var screenshot = ((ITakesScreenshot)driver!).GetScreenshot();
                     var path = Path.Combine(dir, $"{TestContext.TestName}.png");
                     screenshot.SaveAsFile(path);
                 }
@@ -52,7 +52,7 @@ namespace Selenium
         [TestMethod]
         public void OpenGoogleTest()
         {
-            driver.Navigate().GoToUrl("https://google.com/ncr");
+            driver!.Navigate().GoToUrl("https://google.com/ncr");
 
             try
             {
@@ -72,7 +72,7 @@ namespace Selenium
         [TestMethod]
         public void GoogleSearchTest()
         {
-            driver.Navigate().GoToUrl("https://www.google.com/ncr");
+            driver!.Navigate().GoToUrl("https://www.google.com/ncr");
 
             try
             {
@@ -87,7 +87,7 @@ namespace Selenium
             }
 
             var box = driver.FindElement(By.Name("q"));
-            box.SendKeys("Selenium Driver");
+            box.SendKeys("Selenium WebDriver");
         }
 
     }
