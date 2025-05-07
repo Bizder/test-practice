@@ -87,7 +87,7 @@ namespace Selenium
             }
 
             var box = driver.FindElement(By.Name("q"));
-            box.SendKeys("Selenium WebDriver");
+            box.SendKeys("Selenium Driver");
         }
 
     }
